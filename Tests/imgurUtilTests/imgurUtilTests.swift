@@ -2,11 +2,24 @@ import XCTest
 @testable import imgurUtil
 
 final class imgurUtilTests: XCTestCase {
-    func testExample() throws {
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
-
-        // Defining Test Cases and Test Methods
-        // https://developer.apple.com/documentation/xctest/defining_test_cases_and_test_methods
+    
+    // MARK: - Test Properties
+    let imgurUtil = ImgurUtil(clientID: "")
+    
+    func test_FetchGalleryData(){
+        let expectation = self.expectation(description: "API Call Expectation")
+        Task {
+            do {
+                let data = try await imgurUtil.searchImages(query: "cat")
+                XCTAssertNotNil(data, "requested data shouldn;t be nil")
+                XCTAssertFalse(data.isEmpty, "response is nil")
+                expectation.fulfill()
+            } catch {
+                print(error)
+                XCTFail("API call failed with error: \(error)")
+            }
+            
+        }
+        wait(for: [expectation], timeout: 20.0)
     }
 }
