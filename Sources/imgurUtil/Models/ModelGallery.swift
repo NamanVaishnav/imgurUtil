@@ -20,12 +20,12 @@ public struct Gallery:Decodable, Identifiable{
     public let images:[ImageInfo]?
     
     // Computed property to get the first image URL
-        public var imageURL: String {
-            if let images = self.images, let firstImage = images.first, firstImage.type == "image/jpeg" {
-                return firstImage.link ?? ""
-            }
-            return ""
+    public var imageURL: String {
+        if let images = self.images, let firstImage = images.first, firstImage.type == "image/jpeg" {
+            return firstImage.link ?? ""
         }
+        return ""
+    }
     
     public var filterdDate : String {
         let dateFormater = DateFormatter()
@@ -49,9 +49,14 @@ public struct Gallery:Decodable, Identifiable{
         self.imageCount = try container.decodeIfPresent(Int.self, forKey: .imageCount)
         
         self.images = try container.decodeIfPresent([ImageInfo].self, forKey: .images)
-        if let images = self.images{
-            
-        }
+    }
+    
+    public init(id: String, title: String, dateTime: Int, imageCount: Int? = nil, images: [ImageInfo]? = nil) {
+        self.id = id
+        self.title = title
+        self.dateTime = dateTime
+        self.imageCount = imageCount
+        self.images = images
     }
 }
 
