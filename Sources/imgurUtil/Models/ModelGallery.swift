@@ -62,6 +62,11 @@ public struct Gallery:Decodable, Identifiable{
 
 
 public struct ImageInfo:Decodable{
+    public init(type: String? = nil, link: String? = nil) {
+        self.type = type
+        self.link = link
+    }
+    
     public let type:String?
     public let link:String?
 }
